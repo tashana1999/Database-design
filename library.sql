@@ -1,0 +1,39 @@
+CREATE DATABASE library;
+USE library;
+CREATE TABLE Member (
+Member_No VARCHAR (10) NOT NULL PRIMARY KEY ,
+Member_Name VARCHAR (20),
+Member_Address VARCHAR (50),
+Tel_No INT
+);
+CREATE TABLE BookTitle (
+ISBN VARCHAR (10) NOT NULL PRIMARY KEY ,
+Title VARCHAR (20),
+Author VARCHAR (50)
+);
+CREATE TABLE BookCopy (
+Copy_No VARCHAR (10) NOT NULL,
+ISBN VARCHAR (10),
+Purchase_Date DATE,
+Price DECIMAL,
+FOREIGN KEY (ISBN) REFERENCES BookTitle (ISBN),
+PRIMARY KEY (Copy_No, ISBN)
+);
+CREATE TABLE Reservation (
+Reservation_No VARCHAR (10) NOT NULL PRIMARY KEY ,
+Member_No VARCHAR (20),
+ISBN VARCHAR (10),
+Reservation_Date DATE,
+FOREIGN KEY (Member_No) REFERENCES Member (Member_No),
+FOREIGN KEY (ISBN) REFERENCES BookTitle (ISBN)
+);
+CREATE TABLE Borrows (
+Member_No VARCHAR (20),
+Copy_No VARCHAR (10),
+Due_Date DATE,
+Loan_Date DATE,
+Return_Date DATE,
+FOREIGN KEY (Member_No) REFERENCES Member (Member_No),
+FOREIGN KEY (Copy_No) REFERENCES BookCopy (Copy_No),
+PRIMARY KEY (Member_No, Copy_No)
+);
