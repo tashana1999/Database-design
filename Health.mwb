@@ -1,0 +1,59 @@
+CREATE DATABASE HealthAuthority;
+use HealthAuthority;
+CREATE TABLE WARD(
+Ward_No VARCHAR (10) NOT NULL PRIMARY KEY ,
+Hospital_Name VARCHAR (20),
+Ward_Name VARCHAR (20),
+FOREIGN KEY (Hospital_Name) REFERENCES Hospital (Hospital_Name)
+);
+CREATE TABLE Hospital (
+Hospital_Name VARCHAR (30) NOT NULL PRIMARY KEY,
+Hospital_Address VARCHAR (100)
+);
+CREATE TABLE Hospital_telephone (
+Tel_No INT,
+Hospital_Name VARCHAR (20),
+FOREIGN KEY (Hospital_Name) REFERENCES Hospital (Hospital_Name),
+PRIMARY KEY (Tel_No, Hospital_Name)
+);
+CREATE TABLE Consultant (
+Consultant_ID VARCHAR (20) NOT NULL PRIMARY KEY,
+Hospital_Name VARCHAR (20),
+Qualifications VARCHAR (50),
+Salary DECIMAL,
+Title VARCHAR (20),
+Surname VARCHAR (30),
+Forename VARCHAR (30),
+FOREIGN KEY (Hospital_Name) REFERENCES Hospital (Hospital_Name)
+);
+CREATE TABLE Patient (
+Patient_code VARCHAR (20) NOT NULL PRIMARY KEY,
+Patient_Name VARCHAR (30),
+Patient_Address VARCHAR (50)
+);
+CREATE TABLE Consultant_Patient (
+Consultant_ID VARCHAR (20),
+Patient_code VARCHAR (20),
+Consultant_Date DATE,
+Consultant_Time DATETIME,
+FOREIGN KEY (Consultant_ID) REFERENCES Consultant (Consultant_ID),
+FOREIGN KEY (Patient_code) REFERENCES Patient (Patient_code),
+PRIMARY KEY (Consultant_ID, Patient_code)
+);
+CREATE TABLE Drug (
+Drug_Code VARCHAR (20) NOT NULL PRIMARY KEY,
+Drug_Name VARCHAR (50)
+);
+CREATE TABLE Prescription (
+Patient_code VARCHAR (20),
+Drug_Code VARCHAR (20),
+Prescribed_Date DATE,
+Prescribed_Dosage VARCHAR (20),
+PRIMARY KEY (Patient_code, Drug_Code),
+FOREIGN KEY (Drug_Code) REFERENCES Drug (Drug_Code),
+FOREIGN KEY (Patient_code) REFERENCES Patient (Patient_code)
+);
+INSERT INTO Hospital VALUES ('Nawaloka', 'Colombo');
+SELECT * FROM Hospital;
+INSERT INTO Ward VALUES ('AW001', 'Nawaloka', 'Dental');
+SELECT * FROM Ward;
